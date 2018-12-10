@@ -1,0 +1,29 @@
+#单台部署
+
+spring:
+  application:
+    name: spring-cloud-config-git-server
+  cloud:
+      config:
+        server:
+          git:
+            uri: https://github.com/huayuye/springcloud-config-repo/     # 配置git仓库的地址
+            search-paths: test-repo                             # git仓库地址下的相对地址，可以配置多个，用,分割。
+            username: xxxxxx@qq.com                                             # git仓库的账号
+            password: xxxxxx
+server:
+  #指定服务端口
+  port: 8085
+#config结合eureka，server需要配置服务注册和发现中心即可
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+
+#springboot2.0后手动更新config配置方式， http://192.168.2.xxx:8085/actuator/refresh 执行更新，但是此项目目前暂时没更新成功
+#用到@Value的类上需要添加@RefreshScope
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"

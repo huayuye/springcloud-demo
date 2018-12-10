@@ -1,0 +1,8 @@
+rootProject.name = 'springcloud-demo'
+include 'springcloud-eureka'
+include 'springcloud-eureka-comsumer'
+include 'springcloud-eureka-producer'
+include 'springcloud-zuul'
+include 'springcloud-config-git-server'
+include 'springcloud-config-git-client'
+

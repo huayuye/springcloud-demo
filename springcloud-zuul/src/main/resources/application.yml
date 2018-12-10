@@ -1,0 +1,33 @@
+#单台部署
+
+spring:
+  application:
+    name: spring-cloud-zuul
+server:
+  #指定服务端口
+  port: 8084
+zuul:
+  #路由设置
+  routes:
+    #自定义的名称：即名称可随意命名
+    eureka-producer:
+      #拦截以/comsumer开头的路径：如 http://localhost:8084/comsumer/hello/fanhui555
+      path: /comsumer/**
+      #转发到此服务上spring-cloud-comsumer（服务名称）
+      service-id: spring-cloud-comsumer
+      #默认为true,true时转发到相应服务前，则会去掉前缀comsumer，只取comsumer后面的内容，如
+      #访问http://localhost:8084/comsumer/hello/fanhui555时，实际转发后，访问的是服务的此接口 http://localhost:8083/hello/fanhui555
+      #strip-prefix: true
+  #是否开启重试功能
+#  retryable: true
+
+#对当前服务的重试次数
+#ribbon:
+#  MaxAutoRetries: 2
+#  MaxAutoRetriesNextServer: 0
+
+#eureka服务注册和发现中心
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/

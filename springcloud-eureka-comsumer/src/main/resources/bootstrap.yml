@@ -1,0 +1,28 @@
+#这个配置要放在bootstrap.yml中，否则会报注入不了相应的属性值：Could not resolve placeholder:@Value("${name}")
+#因为spring boot是启动的时候才从配置文件中读取配置属性，配置文件在远程配置中心的话，注册中心的信息需要放在bootstrap.yml/properties中才能启动优先读取，放在application.properties.会报该异常没发现属性
+#此项目config没有结合eureka使用
+spring:
+  cloud:
+    config:
+      #1、取git库中properties文件名的前部分.例如：test-config-dev.properties文件名中的test-config,
+      #2、如果name不写的话，那这个client项目的spring.application.name必须是 test-config。建议都要写
+      name: test-config
+      profile: dev
+      #config-server uri 直接连接config server的方式
+#      uri: http://localhost:8085/
+      #与eureka结合使用方式，可提供高可用，如集群
+      discovery:
+      #开启Config服务发现支持
+        enabled: true
+        serviceId: spring-cloud-config-git-server
+      #分支
+      label: master
+#若是config需要结合eureka，则client和server都需要在bootstrap.yml配置服务注册和发现中心，application上添加@EnableEurekaClient
+#client需要去掉spring.cloud.config.uri,
+#添加：spring.cloud.config.discovery.enabled #开启Config服务发现支持
+#添加：spring.cloud.config.discovery.serviceId #指定server端的name,也就是server端spring.application.name的值
+#即可
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/

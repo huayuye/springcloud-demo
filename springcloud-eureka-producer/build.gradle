@@ -1,0 +1,15 @@
+
+group 'com.bingdeng.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile ("jcifs:jcifs:1.3.17"){
+        exclude (group: 'javax.servlet',module:'servlet-api')
+    }
+}

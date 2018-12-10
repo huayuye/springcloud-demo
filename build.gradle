@@ -1,0 +1,83 @@
+group 'com.bingdeng.example'
+version '1.0-SNAPSHOT'
+buildscript {
+    repositories {
+        //    指定阿里云镜像加速地址
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        //    Maven的中央仓库，无需配置，直接声明就可以使用
+        mavenCentral()
+        jcenter()
+//        maven { url "http://repo.spring.io/libs-snapshot-local" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
+    }
+}
+
+//
+//所有项目通用
+allprojects {
+
+    //版本库
+    repositories {
+        //    指定阿里云镜像加速地址
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/"}
+//    Maven的中央仓库，无需配置，直接声明就可以使用
+        mavenCentral()
+//    JCenter中央仓库，实际也是是用的maven搭建的
+        jcenter()
+//    私库或其它的第三方库
+//    maven { url "https://repo.spring.io/snapshot" }
+//        maven { url 'https://repo.spring.io/release/' }
+//        maven { url "http://repo.spring.io/libs-snapshot-local" }
+//        maven { url "http://repo.spring.io/libs-milestone-local" }
+//        maven { url "http://repo.spring.io/libs-release-local" }
+    }
+
+}
+//
+//
+//所有子项目通用
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    // java编译的时候缺省状态下会因为中文字符而失败
+    [compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+//    ext{
+//        springCloudVersion = 'Brixton.BUILD-SNAPSHOT'
+//    }
+    ext {
+        springCloudVersion = 'Finchley.SR1'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+    //版本库
+    repositories {
+        //    指定阿里云镜像加速地址
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/"}
+//    Maven的中央仓库，无需配置，直接声明就可以使用
+        mavenCentral()
+//    JCenter中央仓库，实际也是是用的maven搭建的
+        jcenter()
+//    私库或其它的第三方库
+//    maven { url "https://repo.spring.io/snapshot" }
+//        maven { url 'https://repo.spring.io/release/' }
+//        maven { url "http://repo.spring.io/libs-snapshot-local" }
+//        maven { url "http://repo.spring.io/libs-milestone-local" }
+//        maven { url "http://repo.spring.io/libs-release-local" }
+    }
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-web')
+        testCompile "org.springframework.boot:spring-boot-starter-test"
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
+
+}

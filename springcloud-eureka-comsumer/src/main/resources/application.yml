@@ -1,0 +1,15 @@
+#单台部署
+spring:
+  application:
+    name: spring-cloud-comsumer
+server:
+  #指定服务端口
+  port: 8083
+
+#springboot2.0后手动更新config配置方式， http://192.168.2.xxx:8085/actuator/refresh 执行更新，但是此项目目前暂时没更新成功
+#用到@Value的类上需要添加@RefreshScope
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: bus-refresh

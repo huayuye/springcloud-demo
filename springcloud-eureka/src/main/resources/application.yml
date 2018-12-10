@@ -1,0 +1,66 @@
+#单台部署
+spring:
+  application:
+    name: eureka-server
+server:
+  #指定服务端口
+  port: 8001
+eureka:
+  #指定主机名称
+  instance:
+    hostname: localhost
+  #server一定程度上也是client，互为client，
+  client:
+    #由于自己就是服务器，不需要注册到自己
+#    register-with-eureka: false
+    #由于自己就是服务器，不需要从服务器获取注册信息
+    fetch-registry: false
+    #服务地址
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+#    renewalPercentThreshold: 0.49
+
+
+#集群部署,peer1,peer2,peer3,
+#对等意识，集群Eureka服务器配置
+#---
+#spring:
+#  application:
+#    name: spring-cloud-eureka
+#  profiles: peer1
+#server:
+#  port: 8001
+#eureka:
+#  instance:
+#    hostname: peer1
+#  client:
+#    serviceUrl:
+#      defaultZone: http://peer2:8002/eureka/,http://peer3:8003/eureka/
+#---
+#spring:
+#  application:
+#    name: spring-cloud-eureka
+#  profiles: peer2
+#server:
+#  port: 8002
+#eureka:
+#  instance:
+#    hostname: peer2
+#  client:
+#    serviceUrl:
+#      defaultZone: http://peer1:8001/eureka/,http://peer3:8003/eureka/
+#---
+#spring:
+#  application:
+#    name: spring-cloud-eureka
+#  profiles: peer3
+#server:
+#  port: 8003
+#eureka:
+#  instance:
+#    hostname: peer3
+#  client:
+#    serviceUrl:
+#      defaultZone: http://peer1:8001/eureka/,http://peer2:8002/eureka/

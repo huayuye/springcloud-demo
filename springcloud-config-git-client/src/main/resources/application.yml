@@ -1,0 +1,8 @@
+#单台部署
+server:
+  #指定服务端口
+  port: 8086
+
+spring:
+  application:
+    name: spring-cloud-config-git-client

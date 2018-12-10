@@ -1,0 +1,12 @@
+#单台部署
+
+spring:
+  application:
+    name: spring-cloud-producer
+server:
+  #指定服务端口
+  port: 8082
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
